@@ -14,12 +14,14 @@ import threading
 
 sys.path.append('/home/ubuntu/pangolin_robot_ws/ros2-pangolin-robot/pangolin_control/driver')
 # sys.path.append('/home/puppypi/puppypi_ws/src/puppy_control/driver')
+from Pangolin_ControlCmd_1 import Pangolincontrol
 from Pangolin_ControlCmd import PangolinControl
 
 
 class Pangolin(Node):
     def __init__(self):
         super().__init__('pangolin_control')
+        self.control_cmd_old = Pangolincontrol()
         self.control_cmd = PangolinControl()
 
         self.joy_subscriber_ = self.create_subscription(Joy, 'joy', self.joy_callback, 0)
@@ -44,18 +46,45 @@ class Pangolin(Node):
         # self.get_logger().info('last_joy_msgs_buttons: %s' % self.last_joy_msgs_buttons)
         if msg.buttons[0] != self.last_joy_msgs_buttons[0]:
             
-            self.control_cmd.startCurl()
+            self.control_cmd_old.startCurl()
+
+        if msg.buttons[1] != self.last_joy_msgs_buttons[1]:
+            self.control_cmd.reset_to_orginal()
+
+        # self.get_logger().info(f'button3: {msg.buttons[3]}, last_button: {self.last_joy_msgs_buttons[3]}')
+
+        if msg.buttons[2] != self.last_joy_msgs_buttons[2]:
+            
+            self.control_cmd.replay_recorded_data()
+
+        if msg.buttons[3] != self.last_joy_msgs_buttons[3]:
+            
+            if self.control_cmd.is_recording == False:
+                self.control_cmd.start_record_action_points()
+            else:
+                self.control_cmd.stop_record_action_points()
+
+
+        if msg.buttons[4] != self.last_joy_msgs_buttons[4]:
+            self.control_cmd.controlcmd.start_recording()
+
+        if msg.buttons[5] != self.last_joy_msgs_buttons[5]:
+            self.control_cmd.controlcmd.stop_record_action_points()
+            self.get_logger().info('last_joy_msgs_buttons: %s' % self.last_joy_msgs_buttons)
 
         if msg.buttons[8] != self.last_joy_msgs_buttons[8]:
             if self.is_disalbe_motor == True:
-                self.control_cmd.openPort()
-                self.control_cmd.enableMotor()
+                self.control_cmd_old.openPort()
+                self.control_cmd_old.enableMotor()
                 self.is_disalbe_motor = False
             
             else:
-                self.control_cmd.disableMotor()
+                self.control_cmd_old.disableMotor()
                 self.is_disalbe_motor = True
 
+        self.control_cmd.control_cmd.leg_motor_position_control(position = {"motor1":int(msg.axes[0]*1000 + 1423), "motor2":int(msg.axes[1]*1000 + 2672), "motor3":0, 
+                                                                            "motor4":int(msg.axes[2]*1000 + 2672), "motor5":int(msg.axes[3]*1000 + 1423)})
+        
         # if msg.buttons[0] == 1 and self.control_cmd.is_curling == False:
         #     self.control_cmd.is_curling = True
         #     self.control_cmd.startCurl()
@@ -73,36 +102,18 @@ class Pangolin(Node):
 # puppy cmd vel callback
     def cmd_vel_callback(self, msg):
 
-        self.get_logger().info('vel callback: %s' % msg.angular.z)
-        self.control_cmd.set_servo_rate([round(msg.linear.x), round(msg.angular.z)])
+        self.get_logger().info(f'linear.x: {msg.linear.x} angular.z: {msg.angular.z}')
 
-        if abs(msg.linear.x) >= abs(msg.angular.z):
+        self.control_cmd.set_servo_rate([msg.linear.x - msg.angular.z, msg.linear.x + msg.angular.z])
 
-            # self.get_logger().info('vel callback: %s' % round(msg.linear.x, 0))
-            
-            
+        if round(msg.linear.x, 0) != 0 or round(msg.angular.z, 0) != 0:
+            if self.control_cmd.is_walking == False:
+                self.control_cmd.start_gait()
 
-            if np.sign(round(msg.linear.x, 0)) > 0:
-                if self.control_cmd.is_walking == False:
-                    self.control_cmd.startGait()
-            elif np.sign(round(msg.linear.x, 0)) < 0:
-                if self.control_cmd.is_walking == False:
-                    self.control_cmd.startGait()
-            else:
-                if self.control_cmd.is_walking == True:
-                    self.control_cmd.stopWalking()
         else:
-            if np.sign(round(msg.angular.z, 0)) > 0:
-                if self.control_cmd.is_walking == False:
-                    self.control_cmd.startGait()
-            elif np.sign(round(msg.angular.z, 0)) < 0:
-                if self.control_cmd.is_walking == False:
-                    self.control_cmd.startGait()
-            else:
-                if self.control_cmd.is_walking == True:
-                    self.control_cmd.stopWalking()
+            if self.control_cmd.is_walking == True:
+                self.control_cmd.stop_gait()
 
-        # self.control_cmd.startGait()
 
 def main(args=None):
     rclpy.init(args=args)

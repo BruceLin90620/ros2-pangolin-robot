@@ -5,7 +5,7 @@ import traceback
 import json 
 import threading
 import log
-from Pangolin_ActionGroups import action_dic
+
 # Keyboard interrupt 
 # fd = sys.stdin.fileno()
 # old_settings = termios.tcgetattr(fd)
@@ -33,8 +33,8 @@ class PangolinControl:
         self.log_file_level = log_file_level
         self.log = log.LogHandler(self.__class__.__name__, __name__, self.log_level, self.log_file_level)
 
-        self.motor_center_position = {"motor1":1423, "motor2":2672, "motor3": 1023, "motor4":2672, "motor5":1423}
-        self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":self.motor_center_position["motor3"], "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
+        self.motor_center_position = {"motor1":1423, "motor2":2672, "motor3": 0, "motor4":2672, "motor5":1423}
+        self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":0, "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
         self.init_fail = False
         self.is_walking = False
         self.servo_rate = [1.0, 1.0]
@@ -45,17 +45,27 @@ class PangolinControl:
 
 
     def reset_to_orginal(self):    
-        self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":self.motor_center_position["motor3"], "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
+        self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":0, "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
+
+    def start_thread(self, thread_name):
+        if thread_name == "process_gait":
+            self.is_walking = True
+            thread = threading.Thread(target=self.process_gait, args=(), daemon=True)
+
+
+
+
+        self.walking_thread.start()
 
 
     def process_gait(self):
         while self.is_walking:
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int( 200*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-200*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int( 200*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-200*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-300*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(+300*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-300*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-200*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(+200*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(+300*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-200*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(+200*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int( 200*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":0, "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-200*self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int( 200*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":0, "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-200*self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-300*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":0, "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(+300*self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-300*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-200*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":0, "motor4":int(+200*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(+300*self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-200*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":0, "motor4":int(+200*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":0, "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
 
 
     def start_gait(self):
@@ -85,7 +95,7 @@ class PangolinControl:
                 all_servo_position = self.control_cmd.read_all_motor_data()
                 print(f"recording: {all_servo_position}")
                 f.write(json.dumps(all_servo_position)+'\n')
-                time.sleep(0.01)
+            time.sleep(1)
             self.control_cmd.motor_led_control(LED_OFF)
         print("finish recording!")
 
@@ -101,7 +111,7 @@ class PangolinControl:
 
 
     # Replay the recording file
-    def replay_recorded_data(self):
+    def replay_motor_data(self):
         self.control_cmd.enable_all_motor()
         with open(self.record_path) as f: 
             one_action_point = f.readline()
@@ -109,18 +119,11 @@ class PangolinControl:
                 one_action_point = json.loads(one_action_point) 
                 print(one_action_point)
 
-                self.control_cmd.leg_motor_position_control(position = {"motor1":one_action_point["motor1"], "motor2":one_action_point["motor2"], "motor3":one_action_point["motor3"], 
+                self.control_cmd.leg_motor_position_control(position = {"motor1":one_action_point["motor1"], "motor2":one_action_point["motor2"], "motor3":0, 
                                                                         "motor4":one_action_point["motor4"], "motor5":one_action_point["motor5"]})
-                # time.sleep(0.1)
+                time.sleep(1)
                 one_action_point = f.readline()
     
-
-    def run_action(self, action_name = 'curl'):
-        action = action_dic[action_name]
-        for i in range(len(action)):
-            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
-            print(i)
-            time.sleep(1)
 
     # def motor_led_blink(self):
     #     while self.is_led_blink:
@@ -211,13 +214,53 @@ class ControlCmd:
     
     
     # Control position of all motors
-    def leg_motor_position_control(self, position = {"motor1":2000, "motor2":2000, "motor3":1025, "motor4":2000, "motor5":2000}):
+    def leg_motor_position_control(self, position = {"motor1":2000, "motor2":2000, "motor3":2000, "motor4":2000, "motor5":2000}):
         for motor in self.leg_motor_list:
             motor.writePosition(position[motor.name])
-        self.curl_motor.writePosition(position["motor3"])
         self.dynamixel.sentAllCmd()
         time.sleep(1 / self.walking_freq)
 
+    def start_recording(self):
+        self.is_recording = True
+        # record = True
+        self.recording_thread = threading.Thread(target=self.start_record_action_points, args=(), daemon=True)
+        self.recording_thread.start()
+
+    # start recording the motors position until pressing ESC
+    def start_record_action_points(self):
+        # self.is_recording = record
+        self.disable_all_motor()
+        self.dynamixel.rebootAllMotor()
+        print("start record the action points....")
+        with open(self.record_path, 'w') as f:
+            print("start record the action points....")
+            while self.is_recording:
+                all_servo_position = self.read_all_motor_data()
+                print("recording:", all_servo_position)
+                f.write(json.dumps(all_servo_position)+'\n')
+                time.sleep(1)
+        print("finish recording!")
+
+    # start recording the motors position until pressing ESC
+    def stop_record_action_points(self):
+        self.is_recording = False
+
+
+    # Replay the recording file
+    def replay_motor_data(self):
+        self.enable_all_motor()
+        with open(self.record_path) as f: 
+            one_action_point = f.readline()
+            while one_action_point:
+                one_action_point = json.loads(one_action_point) 
+                print(one_action_point)
+
+                for motor in self.leg_motor_list:
+                    motor.writePosition(one_action_point[motor.name])
+                # self.curl_motor.writePosition(one_action_point['motor3'])
+                self.dynamixel.sentAllCmd()
+                time.sleep(1)
+                one_action_point = f.readline()
 
 
 
@@ -236,13 +279,12 @@ if __name__ == "__main__":
         "enable":pangolin_control.control_cmd.enable_all_motor,
         "record":pangolin_control.start_record_action_points,
         "stop":pangolin_control.stop_record_action_points,
-        "replay":pangolin_control.replay_recorded_data,
+        "replay":pangolin_control.control_cmd.replay_motor_data,
         "disable":pangolin_control.control_cmd.disable_all_motor,
         "read":pangolin_control.control_cmd.read_all_motor_data,
         "pos":pangolin_control.control_cmd.leg_motor_position_control,
-        # "led":pangolin_control.start_led_blink,
-        "run":pangolin_control.run_action,
-        "reset":pangolin_control.reset_to_orginal,
+        "led":pangolin_control.start_led_blink,
+        "run":pangolin_control.start_gait,
 
 
     }
