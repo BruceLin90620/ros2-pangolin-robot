@@ -13,6 +13,8 @@ B_RATE      = 57600
 LED_ADDR_LEN = (65,1)
 LED_ON = 1
 LED_OFF = 0
+x = 200
+y = 300
 
 class PangolinControl:
     def __init__(self, log_level="info", log_file_level="debug"):
@@ -40,12 +42,12 @@ class PangolinControl:
     # Pangolin move gait process
     def process_gait(self):
         while self.is_walking:
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int( 200*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-200*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int( 200*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-200*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-300*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(+300*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-300*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-200*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(+200*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(+300*self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-200*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(+200*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int( x * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int( y * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-y * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-x * self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int( x * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-x * self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-y * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int( y * self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-y * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-x * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int( x * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int( y * self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-x * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int( x * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
+            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int( y * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-y * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
 
     # Start moving 
     def start_gait(self):
