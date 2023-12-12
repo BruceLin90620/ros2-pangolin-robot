@@ -37,7 +37,14 @@ class PangolinControl:
 
     # Reset to the original state
     def reset_to_orginal(self):    
-        self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":self.motor_center_position["motor3"], "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
+        self.control_cmd.leg_motor_position_control(position = {
+            "motor1":self.motor_center_position["motor1"], 
+            "motor2":self.motor_center_position["motor2"], 
+            "motor3":self.motor_center_position["motor3"], 
+            "motor4":self.motor_center_position["motor4"], 
+            "motor5":self.motor_center_position["motor5"]
+            }
+        )
 
     # Pangolin move gait process
     def process_gait(self):
@@ -71,6 +78,7 @@ class PangolinControl:
         self.control_cmd.dynamixel.rebootAllMotor()
         print("rebooting")
         self.control_cmd.motor_led_control(LED_ON)
+        
         with open(self.record_path, 'w') as f:
             print("start record the action points....")
             while self.is_recording:

@@ -41,6 +41,9 @@ $ sudo python setup.py install
 ```
 $ ros2 launch puppy_bringup puppy_bringup.launch.py
 ```
+```
+$ ros2 launch pangolin_bringup pangolin_bringup.launch.py
+```
 
 ### Bug Fix
 

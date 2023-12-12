@@ -61,7 +61,7 @@ DXL_MOVING_STATUS_THRESHOLD = 20                # Dynamixel moving status thresh
 
 index = 0
 
-class Pangolincontrol():
+class Pangolincontrol_old():
     def __init__(self):
         self.X = 50
         self.servo_rate = [1.0, 1.0]
@@ -380,7 +380,7 @@ class Pangolincontrol():
         self.portHandler.closePort()
         
 def main():
-    controller = PangolinControl()
+    controller = Pangolincontrol_old()
     cmd_dict = {
         "w": controller.startGait,
         "s": controller.stopWalking,
