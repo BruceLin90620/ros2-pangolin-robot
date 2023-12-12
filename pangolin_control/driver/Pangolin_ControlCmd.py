@@ -41,7 +41,7 @@ class PangolinControl:
 
         self.is_led_blink = True
         self.is_recording = False
-        self.record_path = '/home/ubuntu/pangolin_robot_ws/ros2-pangolin-robot/pangolin_control/driver/output.txt'
+        self.record_path = '/home/ubuntu/pangolin_ws/ros2-pangolin-robot/pangolin_control/driver/output.txt'
 
 
     def reset_to_orginal(self):    
@@ -115,7 +115,21 @@ class PangolinControl:
                 one_action_point = f.readline()
     
 
-    def run_action(self, action_name = 'curl'):
+    def run_action_curl(self, action_name = 'start_curl'):
+        action = action_dic[action_name]
+        for i in range(len(action)):
+            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
+            print(i)
+            time.sleep(1)
+
+    def run_action_get_down(self, action_name = 'get_down'):
+        action = action_dic[action_name]
+        for i in range(len(action)):
+            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
+            print(i)
+            time.sleep(0.1)
+
+    def run_action_stand_up(self, action_name = 'stand_up'):
         action = action_dic[action_name]
         for i in range(len(action)):
             self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
@@ -241,10 +255,10 @@ if __name__ == "__main__":
         "read":pangolin_control.control_cmd.read_all_motor_data,
         "pos":pangolin_control.control_cmd.leg_motor_position_control,
         # "led":pangolin_control.start_led_blink,
-        "run":pangolin_control.run_action,
+        "run":pangolin_control.run_action_curl,
+        "run1":pangolin_control.run_action_get_down,
+        "run2":pangolin_control.run_action_stand_up,
         "reset":pangolin_control.reset_to_orginal,
-
-
     }
 
 
