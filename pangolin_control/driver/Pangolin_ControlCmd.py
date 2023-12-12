@@ -6,17 +6,6 @@ import json
 import threading
 import log
 from Pangolin_ActionGroups import action_dic
-# Keyboard interrupt 
-# fd = sys.stdin.fileno()
-# old_settings = termios.tcgetattr(fd)
-# def getch():
-#     try:
-#         tty.setraw(sys.stdin.fileno())
-#         ch = sys.stdin.read(1)
-#     finally:
-#         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-#     return ch
-
 
 # main control command
 DEVICE_NAME = "/dev/ttyUSB0"
@@ -35,6 +24,7 @@ class PangolinControl:
 
         self.motor_center_position = {"motor1":1423, "motor2":2672, "motor3": 1023, "motor4":2672, "motor5":1423}
         self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":self.motor_center_position["motor3"], "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
+        
         self.init_fail = False
         self.is_walking = False
         self.servo_rate = [1.0, 1.0]
@@ -43,11 +33,11 @@ class PangolinControl:
         self.is_recording = False
         self.record_path = '/home/ubuntu/pangolin_ws/ros2-pangolin-robot/pangolin_control/driver/output.txt'
 
-
+    # Reset to the original state
     def reset_to_orginal(self):    
         self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":self.motor_center_position["motor3"], "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
 
-
+    # Pangolin move gait process
     def process_gait(self):
         while self.is_walking:
             self.control_cmd.leg_motor_position_control(position = {"motor1":int( 200*self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-200*self.servo_rate[1]+self.motor_center_position["motor5"]) })
@@ -57,22 +47,22 @@ class PangolinControl:
             self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-200*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(+200*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
             self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(+300*self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-300*self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
 
-
+    # Start moving 
     def start_gait(self):
         self.is_walking = True
         self.walking_thread = threading.Thread(target=self.process_gait, args=(), daemon=True)
         self.walking_thread.start()
 
-
+    # Stop moving 
     def stop_gait(self):
         self.is_walking = False
         self.reset_to_orginal()
 
-
+    # Set the twist msg to left and right side of the motors
     def set_servo_rate(self, servo_rate=[1.0, 1.0]):
         self.servo_rate = servo_rate
 
-    # start recording the motors position until pressing ESC
+    # The process of the recording function
     def process_record_action_points(self):
         self.control_cmd.disable_all_motor()
         print("disabling")
@@ -89,13 +79,13 @@ class PangolinControl:
             self.control_cmd.motor_led_control(LED_OFF)
         print("finish recording!")
 
-
+    # Start recording the motors position
     def start_record_action_points(self):
         self.is_recording = True
         self.recording_thread = threading.Thread(target=self.process_record_action_points, args=(), daemon=True)
         self.recording_thread.start()
 
-    # start recording the motors position until pressing ESC
+    # Stop recording
     def stop_record_action_points(self):
         self.is_recording = False
 
@@ -114,22 +104,8 @@ class PangolinControl:
                 # time.sleep(0.1)
                 one_action_point = f.readline()
     
-
-    def run_action_curl(self, action_name = 'start_curl'):
-        action = action_dic[action_name]
-        for i in range(len(action)):
-            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
-            print(i)
-            time.sleep(1)
-
-    def run_action_get_down(self, action_name = 'get_down'):
-        action = action_dic[action_name]
-        for i in range(len(action)):
-            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
-            print(i)
-            time.sleep(0.1)
-
-    def run_action_stand_up(self, action_name = 'stand_up'):
+    # Run the action in Pangolin_ActionGroups.py
+    def run_action(self, action_name = 'curl'):
         action = action_dic[action_name]
         for i in range(len(action)):
             self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
@@ -211,7 +187,6 @@ class ControlCmd:
             self.motor_position[motor.name] = motor.PRESENT_POSITION_value
         self.motor_position['motor3'] = self.curl_motor.PRESENT_POSITION_value
 
-            # self.motor_position[motor.name] = int(motor.PRESENT_POSITION_value*360/4095)  #360 degrees
         print("motor_position", self.motor_position)
         return self.motor_position
 
@@ -236,15 +211,7 @@ class ControlCmd:
 
 
 if __name__ == "__main__":
-    # controlcmd = ControlCmd()
     pangolin_control = PangolinControl()
-    # while True:
-    #     print("Press any key to continue! (or press ESC to quit!)")
-    #     if getch() == chr(0x1b):
-    #         break
-    #     all_servo_position = controlcmd.read_motor_data()
-    #     print(all_servo_position)
-    # controlcmd.disable_all_motor()
 
     command_dict = {
         "enable":pangolin_control.control_cmd.enable_all_motor,
@@ -255,10 +222,10 @@ if __name__ == "__main__":
         "read":pangolin_control.control_cmd.read_all_motor_data,
         "pos":pangolin_control.control_cmd.leg_motor_position_control,
         # "led":pangolin_control.start_led_blink,
-        "run":pangolin_control.run_action_curl,
-        "run1":pangolin_control.run_action_get_down,
-        "run2":pangolin_control.run_action_stand_up,
+        "run":pangolin_control.run_action,
         "reset":pangolin_control.reset_to_orginal,
+
+
     }
 
 
