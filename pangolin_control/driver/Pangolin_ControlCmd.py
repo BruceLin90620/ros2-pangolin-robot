@@ -6,55 +6,92 @@ import json
 import threading
 import log
 from Pangolin_ActionGroups import action_dic
+from Pangolin_Config import *
 
-# main control command
-DEVICE_NAME = "/dev/ttyUSB0"
-B_RATE      = 57600
-LED_ADDR_LEN = (65,1)
-LED_ON = 1
-LED_OFF = 0
-x = 200
-y = 300
+
 
 class PangolinControl:
-    def __init__(self, log_level="info", log_file_level="debug"):
+    def __init__(self):
         self.control_cmd = ControlCmd()
 
-        self.log_level = log_level
-        self.log_file_level = log_file_level
-        self.log = log.LogHandler(self.__class__.__name__, __name__, self.log_level, self.log_file_level)
-
-        self.motor_center_position = {"motor1":1423, "motor2":2672, "motor3": 1023, "motor4":2672, "motor5":1423}
-        self.control_cmd.leg_motor_position_control(position = {"motor1":self.motor_center_position["motor1"]    ,"motor2":self.motor_center_position["motor2"]      , "motor3":self.motor_center_position["motor3"], "motor4":self.motor_center_position["motor4"]     , "motor5":self.motor_center_position["motor5"]     })
+        self.motor_center_position = {"motor1":1506,   
+                                      "motor2":2618, 
+                                      "motor3":1023, 
+                                      "motor4":2846, 
+                                      "motor5":1315}
         
         self.init_fail = False
         self.is_walking = False
+
         self.servo_rate = [1.0, 1.0]
 
         self.is_led_blink = True
         self.is_recording = False
+        self.gait_name = 'move_linear'
         self.record_path = '/home/ubuntu/pangolin_ws/ros2-pangolin-robot/pangolin_control/driver/output.txt'
+
+        self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(0, 'motor1'), 
+                                                                "motor2":self.inverse_kinematic(0, 'motor2'), 
+                                                                "motor3":self.inverse_kinematic(0, 'motor3'),
+                                                                "motor4":self.inverse_kinematic(0, 'motor4'),
+                                                                "motor5":self.inverse_kinematic(0, 'motor5')})
+
 
     # Reset to the original state
     def reset_to_orginal(self):    
-        self.control_cmd.leg_motor_position_control(position = {
-            "motor1":self.motor_center_position["motor1"], 
-            "motor2":self.motor_center_position["motor2"], 
-            "motor3":self.motor_center_position["motor3"], 
-            "motor4":self.motor_center_position["motor4"], 
-            "motor5":self.motor_center_position["motor5"]
-            }
-        )
+        self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(0, 'motor1'), 
+                                                                "motor2":self.inverse_kinematic(0, 'motor2'), 
+                                                                "motor3":self.inverse_kinematic(0, 'motor3'),
+                                                                "motor4":self.inverse_kinematic(0, 'motor4'),
+                                                                "motor5":self.inverse_kinematic(0, 'motor5')})
+
+
+    def inverse_kinematic(self, leg_pos, motor_name):
+        leg_side = 0
+        direction = 1
+        if motor_name == 'motor1':
+            leg_side = 0
+            direction = 1
+        elif motor_name == 'motor2':
+            leg_side = 1
+            direction = -1
+        elif motor_name == 'motor4':
+            leg_side = 0
+            direction = 1
+        elif motor_name == 'motor5':
+            leg_side = 1
+            direction = -1
+        else:
+            return int(self.motor_center_position[motor_name])
+
+        return int(direction*leg_pos* self.servo_rate[leg_side] + self.motor_center_position[motor_name])
+    
 
     # Pangolin move gait process
     def process_gait(self):
-        while self.is_walking:
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int( x * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int( y * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-y * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-x * self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int( x * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(-x * self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-y * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(     self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(     self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int( y * self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(-y * self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-x * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int( x * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int( y * self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int(-x * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int( x * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
-            self.control_cmd.leg_motor_position_control(position = {"motor1":int(     self.servo_rate[0]+self.motor_center_position["motor1"]), "motor2":int( y * self.servo_rate[1]+self.motor_center_position["motor2"]) , "motor3":int(self.motor_center_position["motor3"]), "motor4":int(-y * self.servo_rate[0]+self.motor_center_position["motor4"]) , "motor5":int(     self.servo_rate[1]+self.motor_center_position["motor5"]) })
+        if self.gait_name == 'move_linear':
+            while self.is_walking:
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic( leg_forward, 'motor1'), "motor2":self.inverse_kinematic(leg_backward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(leg_backward, 'motor4') , "motor5":self.inverse_kinematic( leg_forward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic( leg_forward, 'motor1'), "motor2":self.inverse_kinematic(           0, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(           0, 'motor4') , "motor5":self.inverse_kinematic( leg_forward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), "motor2":self.inverse_kinematic(           0, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(           0, 'motor4') , "motor5":self.inverse_kinematic(leg_backward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), "motor2":self.inverse_kinematic( leg_forward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic( leg_forward, 'motor4') , "motor5":self.inverse_kinematic(leg_backward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), "motor2":self.inverse_kinematic( leg_forward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic( leg_forward, 'motor4') , "motor5":self.inverse_kinematic(           0, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), "motor2":self.inverse_kinematic(leg_backward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(leg_backward, 'motor4') , "motor5":self.inverse_kinematic(           0, 'motor5')})
+
+        elif self.gait_name == 'turn_right':
+            while self.is_walking:
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), "motor2":self.inverse_kinematic(leg_backward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(turn_forward, 'motor4') , "motor5":self.inverse_kinematic(           0, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), "motor2":self.inverse_kinematic(leg_backward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(turn_forward, 'motor4') , "motor5":self.inverse_kinematic(turn_forward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), "motor2":self.inverse_kinematic(           0, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(           0, 'motor4') , "motor5":self.inverse_kinematic(turn_forward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), "motor2":self.inverse_kinematic(           0, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(           0, 'motor4') , "motor5":self.inverse_kinematic(           0, 'motor5')})
+
+        elif self.gait_name == 'turn_left':
+            while self.is_walking:
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), "motor2":self.inverse_kinematic(           0, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(           0, 'motor4') , "motor5":self.inverse_kinematic(           0, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), "motor2":self.inverse_kinematic(           0, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(           0, 'motor4') , "motor5":self.inverse_kinematic(turn_forward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), "motor2":self.inverse_kinematic(leg_backward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(turn_forward, 'motor4') , "motor5":self.inverse_kinematic(turn_forward, 'motor5')})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), "motor2":self.inverse_kinematic(leg_backward, 'motor2') , "motor3":self.inverse_kinematic(0, 'motor3'), "motor4":self.inverse_kinematic(turn_forward, 'motor4') , "motor5":self.inverse_kinematic(           0, 'motor5')})
+
 
     # Start moving 
     def start_gait(self):
@@ -70,6 +107,10 @@ class PangolinControl:
     # Set the twist msg to left and right side of the motors
     def set_servo_rate(self, servo_rate=[1.0, 1.0]):
         self.servo_rate = servo_rate
+
+    # Set the twist msg to left and right side of the motors
+    def set_gait_name(self, gait_name='move_linear'):
+        self.gait_name = gait_name
 
     # The process of the recording function
     def process_record_action_points(self):
@@ -114,6 +155,7 @@ class PangolinControl:
                 # time.sleep(0.1)
                 one_action_point = f.readline()
     
+
     # Run the action in Pangolin_ActionGroups.py
     def run_action_curl(self, action_name = 'start_curl'):
         action = action_dic[action_name]
@@ -136,22 +178,7 @@ class PangolinControl:
             print(i)
             time.sleep(1)
 
-    # def motor_led_blink(self):
-    #     while self.is_led_blink:
-    #         self.control_cmd.motor_led_control(LED_ON)
-    #         time.sleep(0.2)
-    #         self.control_cmd.motor_led_control(LED_OFF)
-    #         time.sleep(0.2)
     
-    # def start_led_blink(self):
-    #     self.is_led_blink = True
-    #     self.led_blinking_thread = threading.Thread(target=self.motor_led_blink, args=(), daemon=True)
-    #     self.led_blinking_thread.start()
-
-    # def stop_led_blink(self):
-    #     self.is_led_blink = False
-
-
 class ControlCmd:
     def __init__(self):
 
@@ -210,6 +237,8 @@ class ControlCmd:
         for motor in self.leg_motor_list:
             self.motor_position[motor.name] = motor.PRESENT_POSITION_value
         self.motor_position['motor3'] = self.curl_motor.PRESENT_POSITION_value
+        #     self.motor_position[motor.name] = motor.PRESENT_CURRENT_value
+        # self.motor_position['motor3'] = self.curl_motor.PRESENT_CURRENT_value
 
         print("motor_position", self.motor_position)
         return self.motor_position
@@ -236,7 +265,6 @@ class ControlCmd:
 
 if __name__ == "__main__":
     pangolin_control = PangolinControl()
-
     command_dict = {
         "enable":pangolin_control.control_cmd.enable_all_motor,
         "record":pangolin_control.start_record_action_points,
