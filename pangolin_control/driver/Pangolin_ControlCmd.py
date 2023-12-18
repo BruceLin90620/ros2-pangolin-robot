@@ -15,11 +15,7 @@ class PangolinControl:
     def __init__(self):
         self.control_cmd = ControlCmd()
         self.stance_cmd = PangolinStance()
-        self.motor_center_position = {"motor1":1506,   
-                                      "motor2":2618, 
-                                      "motor3":1023, 
-                                      "motor4":2846, 
-                                      "motor5":1315}
+        self.motor_center_position = {'motor1': 1432, 'motor2': 2733, 'motor3': 992, 'motor4': 2753, 'motor5': 1322}
         
         self.init_fail = False
         self.is_walking = False
@@ -168,21 +164,33 @@ class PangolinControl:
     def run_action_curl(self, action_name = 'start_curl'):
         action = action_dic[action_name]
         for i in range(len(action)):
-            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
+            self.control_cmd.leg_motor_position_control( position = {"motor1":action[i]["motor1"], 
+                                                                     "motor2":action[i]["motor2"], 
+                                                                     "motor3":action[i]["motor3"], 
+                                                                     "motor4":action[i]["motor4"], 
+                                                                     "motor5":action[i]["motor5"]})
             print(i)
             time.sleep(1)
 
     def run_action_get_down(self, action_name = 'get_down'):
         action = action_dic[action_name]
         for i in range(len(action)):
-            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
+            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], 
+                                                                    "motor2":action[i]["motor2"], 
+                                                                    "motor3":action[i]["motor3"], 
+                                                                    "motor4":action[i]["motor4"], 
+                                                                    "motor5":action[i]["motor5"]})
             print(i)
             time.sleep(0.1)
 
     def run_action_stand_up(self, action_name = 'stand_up'):
         action = action_dic[action_name]
         for i in range(len(action)):
-            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], "motor2":action[i]["motor2"], "motor3":action[i]["motor3"], "motor4":action[i]["motor4"], "motor5":action[i]["motor5"]})
+            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], 
+                                                                    "motor2":action[i]["motor2"], 
+                                                                    "motor3":action[i]["motor3"], 
+                                                                    "motor4":action[i]["motor4"], 
+                                                                    "motor5":action[i]["motor5"]})
             print(i)
             time.sleep(1)
 
@@ -201,6 +209,7 @@ class PangolinControl:
         
         return self.stance_cmd.motor_pos
     
+
 class ControlCmd:
     def __init__(self):
 

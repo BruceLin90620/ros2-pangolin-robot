@@ -127,14 +127,14 @@ class Pangolin(Node):
                 self.control_cmd.set_gait_name('move_linear')
                 self.control_cmd.start_gait()
 
-        elif round(msg.angular.z, 0) > 0:
-            self.control_cmd.set_servo_rate([-msg.angular.z, -msg.angular.z])
+        elif round(msg.angular.z, 0) < 0:
+            self.control_cmd.set_servo_rate([msg.angular.z, msg.angular.z])
             if self.control_cmd.is_walking == False:
                 self.control_cmd.set_gait_name('turn_right')
                 self.control_cmd.start_gait()
 
-        elif round(msg.angular.z, 0) < 0:
-            self.control_cmd.set_servo_rate([msg.angular.z, msg.angular.z])
+        elif round(msg.angular.z, 0) > 0:
+            self.control_cmd.set_servo_rate([-msg.angular.z, -msg.angular.z])
             if self.control_cmd.is_walking == False:
                 self.control_cmd.set_gait_name('turn_left')
                 self.control_cmd.start_gait()
