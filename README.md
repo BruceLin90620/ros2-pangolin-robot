@@ -46,5 +46,3 @@ $ ros2 launch pangolin_bringup pangolin_bringup.launch.py
 ```
 
 ### Bug Fix
-
-- [https://www.notion.so/ROS2-Joystick-Driver-Issue-ce55f7c88de34f2aa791ee9c2afc8dd5?pvs=4](https://www.notion.so/ROS2-Joystick-Driver-Issue-ce55f7c88de34f2aa791ee9c2afc8dd5?pvs=21)
