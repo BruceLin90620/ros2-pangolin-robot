@@ -7,13 +7,14 @@ import threading
 import log
 from Pangolin_ActionGroups import action_dic
 from Pangolin_Config import *
+from Pangolin_Stance import PangolinStance
 
 
 
 class PangolinControl:
     def __init__(self):
         self.control_cmd = ControlCmd()
-
+        self.stance_cmd = PangolinStance()
         self.motor_center_position = {"motor1":1506,   
                                       "motor2":2618, 
                                       "motor3":1023, 
@@ -22,6 +23,11 @@ class PangolinControl:
         
         self.init_fail = False
         self.is_walking = False
+        
+        self.x = 0
+        self.z = LEG_HEIGHT
+        self.pitch = 0
+        self.roll = 0
 
         self.servo_rate = [1.0, 1.0]
 
@@ -63,10 +69,9 @@ class PangolinControl:
             direction = -1
         else:
             return int(self.motor_center_position[motor_name])
-
+        
         return int(direction*leg_pos* self.servo_rate[leg_side] + self.motor_center_position[motor_name])
     
-
     # Pangolin move gait process
     def process_gait(self):
         if self.gait_name == 'move_linear':
@@ -150,8 +155,11 @@ class PangolinControl:
                 one_action_point = json.loads(one_action_point) 
                 print(one_action_point)
 
-                self.control_cmd.leg_motor_position_control(position = {"motor1":one_action_point["motor1"], "motor2":one_action_point["motor2"], "motor3":one_action_point["motor3"], 
-                                                                        "motor4":one_action_point["motor4"], "motor5":one_action_point["motor5"]})
+                self.control_cmd.leg_motor_position_control(position = {"motor1":one_action_point["motor1"], 
+                                                                        "motor2":one_action_point["motor2"], 
+                                                                        "motor3":one_action_point["motor3"], 
+                                                                        "motor4":one_action_point["motor4"], 
+                                                                        "motor5":one_action_point["motor5"]})
                 # time.sleep(0.1)
                 one_action_point = f.readline()
     
@@ -178,6 +186,20 @@ class PangolinControl:
             print(i)
             time.sleep(1)
 
+    def stance_control(self):
+        self.stance_cmd.reset_zero()
+        self.stance_cmd.translation_x(self.x)
+        self.stance_cmd.translation_z(self.z)
+        self.stance_cmd.cal_pitch(self.pitch)
+        self.stance_cmd.cal_roll(self.roll)
+        # return self.stance_cmd.motor_pos
+        self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(int(self.stance_cmd.motor_pos['motor1']*4095/360), 'motor1'), 
+                                                                "motor2":self.inverse_kinematic(int(self.stance_cmd.motor_pos['motor2']*4095/360), 'motor2'), 
+                                                                "motor3":self.inverse_kinematic(int(self.stance_cmd.motor_pos['motor3']*4095/360), 'motor3'), 
+                                                                "motor4":self.inverse_kinematic(int(self.stance_cmd.motor_pos['motor4']*4095/360), 'motor4'),
+                                                                "motor5":self.inverse_kinematic(int(self.stance_cmd.motor_pos['motor5']*4095/360), 'motor5')})
+        
+        return self.stance_cmd.motor_pos
     
 class ControlCmd:
     def __init__(self):
@@ -278,6 +300,7 @@ if __name__ == "__main__":
         "run1":pangolin_control.run_action_get_down,
         "run2":pangolin_control.run_action_stand_up,
         "reset":pangolin_control.reset_to_orginal,
+        "stance":pangolin_control.stance_control,
     }
 
 

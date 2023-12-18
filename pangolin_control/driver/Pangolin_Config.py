@@ -8,3 +8,8 @@ LED_OFF = 0
 leg_forward = 200
 leg_backward = -300 # test 200
 turn_forward = 300
+
+L = 205
+B = 90
+W = 92
+LEG_HEIGHT = 95

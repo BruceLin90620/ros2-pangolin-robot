@@ -15,6 +15,7 @@ import threading
 sys.path.append('/home/ubuntu/pangolin_ws/ros2-pangolin-robot/pangolin_control/driver')
 # sys.path.append('/home/puppypi/puppypi_ws/src/puppy_control/driver')
 from Pangolin_ControlCmd import PangolinControl
+from Pangolin_Config import *
 
 
 class Pangolin(Node):
@@ -28,6 +29,7 @@ class Pangolin(Node):
         self.is_first_time = True
         self.is_disalbe_motor = True
         self.is_freedom_mode = False
+        self.is_stance_mode = False
         self.is_curl = False
         self.last_joy_msgs_buttons = []
 
@@ -43,7 +45,30 @@ class Pangolin(Node):
             self.is_first_time = False
 
         if msg.buttons[0] != self.last_joy_msgs_buttons[0]:
-            self.control_cmd.run_action_curl()
+            self.is_stance_mode = not self.is_stance_mode
+
+        if self.is_stance_mode == True:
+            if msg.axes[1]>0.5:
+                self.control_cmd.x += 1.5
+            elif msg.axes[1]<-0.5:
+                self.control_cmd.x -= 1.5
+            if msg.axes[0]>0.5:
+                self.control_cmd.z += 1.5
+            elif msg.axes[0]<-0.5:
+                self.control_cmd.z -= 1.5
+
+            self.control_cmd.pitch = msg.axes[2]*15
+            self.control_cmd.roll = msg.axes[3]*15
+
+            # self.get_logger().info()
+            self.get_logger().info(f'button3: {self.control_cmd.stance_control()}')
+        else:
+            self.control_cmd.x = 0
+            self.control_cmd.z = LEG_HEIGHT
+            self.control_cmd.pitch = 0
+            self.control_cmd.roll = 0
+            
+
 
         if msg.buttons[1] != self.last_joy_msgs_buttons[1]:
             self.control_cmd.reset_to_orginal()

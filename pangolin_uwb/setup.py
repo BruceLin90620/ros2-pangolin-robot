@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'pangolin_UWB'
+package_name = 'pangolin_uwb'
 
 setup(
     name=package_name,
