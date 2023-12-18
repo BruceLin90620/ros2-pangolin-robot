@@ -40,6 +40,11 @@ class Pangolin(Node):
     
 
     def joy_callback(self, msg):
+        # X:0, A:1, B:2, Y:3
+        # LB:4, RB:5, LT:6, RT:7
+        # BACK:8, START:9, 
+        # L3:10, R3:11  
+
         if self.is_first_time == True:
             self.last_joy_msgs_buttons = msg.buttons
             self.is_first_time = False
@@ -96,21 +101,24 @@ class Pangolin(Node):
 
 
         if msg.buttons[4] != self.last_joy_msgs_buttons[4]:
-            self.control_cmd.controlcmd.start_recording()
+            # self.control_cmd.controlcmd.start_recording()
+            pass
 
         if msg.buttons[5] != self.last_joy_msgs_buttons[5]:
-            self.control_cmd.controlcmd.stop_record_action_points()
-            self.get_logger().info('last_joy_msgs_buttons: %s' % self.last_joy_msgs_buttons)
+            # self.control_cmd.controlcmd.stop_record_action_points()
+            # self.get_logger().info('last_joy_msgs_buttons: %s' % self.last_joy_msgs_buttons)
+            pass    
 
         if msg.buttons[8] != self.last_joy_msgs_buttons[8]:
-            if self.is_disalbe_motor == True:
-                self.control_cmd_old.openPort()
-                self.control_cmd_old.enableMotor()
-                self.is_disalbe_motor = False
+            # if self.is_disalbe_motor == True:
+            #     self.control_cmd_old.openPort()
+            #     self.control_cmd_old.enableMotor()
+            #     self.is_disalbe_motor = False
             
-            else:
-                self.control_cmd_old.disableMotor()
-                self.is_disalbe_motor = True
+            # else:
+            #     self.control_cmd_old.disableMotor()
+            #     self.is_disalbe_motor = True
+            pass
 
         self.last_joy_msgs_buttons = msg.buttons
 

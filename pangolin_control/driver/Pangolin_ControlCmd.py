@@ -9,8 +9,6 @@ from Pangolin_ActionGroups import action_dic
 from Pangolin_Config import *
 from Pangolin_Stance import PangolinStance
 
-
-
 class PangolinControl:
     def __init__(self):
         self.control_cmd = ControlCmd()
@@ -372,9 +370,9 @@ if __name__ == "__main__":
         "read":pangolin_control.control_cmd.read_all_motor_data,
         "pos":pangolin_control.control_cmd.leg_motor_position_control,
         # "led":pangolin_control.start_led_blink,
-        "run":pangolin_control.run_action_curl,
-        "run1":pangolin_control.run_action_get_down,
-        "run2":pangolin_control.run_action_stand_up,
+        "curl":pangolin_control.run_action_curl,
+        "getdown":pangolin_control.run_action_get_down,
+        "standup":pangolin_control.run_action_stand_up,
         "reset":pangolin_control.reset_to_orginal,
         "stance":pangolin_control.stance_control,
     }

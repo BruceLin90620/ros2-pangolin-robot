@@ -45,6 +45,13 @@ $ ros2 run joy joy_node
 $ ros2 topic echo /joy
 ```
 
+### Control Button
+* #### START: walk
+* #### X: stance_mode
+* #### A: reset
+* #### B: get dowm & stand up
+* #### Y: freedom_mode
+
 ### Bug Fix
 
 - [https://www.notion.so/ROS2-Joystick-Driver-Issue-ce55f7c88de34f2aa791ee9c2afc8dd5?pvs=4](https://www.notion.so/ROS2-Joystick-Driver-Issue-ce55f7c88de34f2aa791ee9c2afc8dd5?pvs=21)
