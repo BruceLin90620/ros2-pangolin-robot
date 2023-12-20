@@ -25,12 +25,16 @@ $ pip3 install setuptools==58.2.0
 ```
 $ sudo apt install ros-humble-joy && sudo apt install ros-humble-teleop-twist-joy
 ``` 
-
-- cd /home/user: 
+- Install Dynamixel SDK
+```
+$ cd /home/user
+``` 
 ```
 $ git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 ```
-- cd /DynamixlSDK/python: 
+```
+$ cd /DynamixlSDK/python
+``` 
 ```
 $ sudo python setup.py install
 ```
