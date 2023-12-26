@@ -25,25 +25,23 @@ $ pip3 install setuptools==58.2.0
 ```
 $ sudo apt install ros-humble-joy && sudo apt install ros-humble-teleop-twist-joy
 ``` 
-- Install Dynamixel SDK
-```
-$ cd /home/user
-``` 
+
+- cd /home/user: 
 ```
 $ git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 ```
-```
-$ cd /DynamixlSDK/python
-``` 
+- cd /DynamixlSDK/python: 
 ```
 $ sudo python setup.py install
 ```
 
 
-### Test
+### Pangolin Start
 ```
 $ ros2 launch pangolin_bringup pangolin_bringup.launch.py
 ```
+
+### test
 ```
 $ ros2 run joy joy_node
 $ ros2 topic echo /joy
@@ -55,6 +53,10 @@ $ ros2 topic echo /joy
 * #### A: reset
 * #### B: get dowm & stand up
 * #### Y: freedom_mode
+
+### Record
+* #### LB: start(first pressed) & stop(second pressed) record
+* #### RB: repaly 
 
 ### Bug Fix
 

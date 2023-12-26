@@ -1214,3 +1214,163 @@
 [2023-12-18 09:29:16,145] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
 [2023-12-18 09:29:16,161] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
 [2023-12-18 09:29:16,177] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:03:36,729] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to open the port
+[2023-12-26 06:03:36,737] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to change the baudrate
+[2023-12-26 06:03:36,775] [DXL_Conmunication .DXL_motor_1] [INFO]: pingMotor : [ID:001] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:03:36,807] [DXL_Conmunication .DXL_motor_2] [INFO]: pingMotor : [ID:002] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:03:36,839] [DXL_Conmunication .DXL_motor_3] [INFO]: pingMotor : [ID:003] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:03:36,871] [DXL_Conmunication .DXL_motor_4] [INFO]: pingMotor : [ID:004] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:03:36,904] [DXL_Conmunication .DXL_motor_5] [INFO]: pingMotor : [ID:005] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:03:36,919] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:03:36,935] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:03:36,951] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:03:36,967] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:03:36,983] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:03:40,103] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:03:40,119] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:03:40,135] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:03:40,151] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:03:40,167] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
+[2023-12-26 06:05:20,386] [DXL_Conmunication .DXL_motor_1] [INFO]: disableMotor : Motor1 disarmed SUCCESSFULLY
+[2023-12-26 06:05:20,402] [DXL_Conmunication .DXL_motor_2] [INFO]: disableMotor : Motor2 disarmed SUCCESSFULLY
+[2023-12-26 06:05:20,418] [DXL_Conmunication .DXL_motor_4] [INFO]: disableMotor : Motor4 disarmed SUCCESSFULLY
+[2023-12-26 06:05:20,434] [DXL_Conmunication .DXL_motor_5] [INFO]: disableMotor : Motor5 disarmed SUCCESSFULLY
+[2023-12-26 06:05:20,450] [DXL_Conmunication .DXL_motor_3] [INFO]: disableMotor : Motor3 disarmed SUCCESSFULLY
+[2023-12-26 06:07:03,886] [DXL_Conmunication .DXL_motor_1] [INFO]: disableMotor : Motor1 disarmed SUCCESSFULLY
+[2023-12-26 06:07:03,902] [DXL_Conmunication .DXL_motor_2] [INFO]: disableMotor : Motor2 disarmed SUCCESSFULLY
+[2023-12-26 06:07:03,917] [DXL_Conmunication .DXL_motor_4] [INFO]: disableMotor : Motor4 disarmed SUCCESSFULLY
+[2023-12-26 06:07:03,933] [DXL_Conmunication .DXL_motor_5] [INFO]: disableMotor : Motor5 disarmed SUCCESSFULLY
+[2023-12-26 06:07:03,949] [DXL_Conmunication .DXL_motor_3] [INFO]: disableMotor : Motor3 disarmed SUCCESSFULLY
+[2023-12-26 06:07:03,965] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:07:03,982] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:07:03,998] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:07:04,014] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:07:04,030] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:11:49,092] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to open the port
+[2023-12-26 06:11:49,098] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to change the baudrate
+[2023-12-26 06:11:49,138] [DXL_Conmunication .DXL_motor_1] [INFO]: pingMotor : [ID:001] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:11:49,170] [DXL_Conmunication .DXL_motor_2] [INFO]: pingMotor : [ID:002] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:11:49,202] [DXL_Conmunication .DXL_motor_3] [INFO]: pingMotor : [ID:003] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:11:49,234] [DXL_Conmunication .DXL_motor_4] [INFO]: pingMotor : [ID:004] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:11:49,266] [DXL_Conmunication .DXL_motor_5] [INFO]: pingMotor : [ID:005] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:11:49,282] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:11:49,298] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:11:49,314] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:11:49,330] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:11:49,346] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:11:52,466] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:11:52,482] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:11:52,498] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:11:52,514] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:11:52,530] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
+[2023-12-26 06:11:59,170] [DXL_Conmunication .DXL_motor_1] [INFO]: disableMotor : Motor1 disarmed SUCCESSFULLY
+[2023-12-26 06:11:59,186] [DXL_Conmunication .DXL_motor_2] [INFO]: disableMotor : Motor2 disarmed SUCCESSFULLY
+[2023-12-26 06:11:59,202] [DXL_Conmunication .DXL_motor_4] [INFO]: disableMotor : Motor4 disarmed SUCCESSFULLY
+[2023-12-26 06:11:59,218] [DXL_Conmunication .DXL_motor_5] [INFO]: disableMotor : Motor5 disarmed SUCCESSFULLY
+[2023-12-26 06:11:59,234] [DXL_Conmunication .DXL_motor_3] [INFO]: disableMotor : Motor3 disarmed SUCCESSFULLY
+[2023-12-26 06:12:22,336] [DXL_Conmunication .DXL_motor_1] [INFO]: disableMotor : Motor1 disarmed SUCCESSFULLY
+[2023-12-26 06:12:22,352] [DXL_Conmunication .DXL_motor_2] [INFO]: disableMotor : Motor2 disarmed SUCCESSFULLY
+[2023-12-26 06:12:22,368] [DXL_Conmunication .DXL_motor_4] [INFO]: disableMotor : Motor4 disarmed SUCCESSFULLY
+[2023-12-26 06:12:22,384] [DXL_Conmunication .DXL_motor_5] [INFO]: disableMotor : Motor5 disarmed SUCCESSFULLY
+[2023-12-26 06:12:22,400] [DXL_Conmunication .DXL_motor_3] [INFO]: disableMotor : Motor3 disarmed SUCCESSFULLY
+[2023-12-26 06:12:22,416] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:12:22,432] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:12:22,448] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:12:22,464] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:12:22,480] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:13:49,914] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to open the port
+[2023-12-26 06:13:49,921] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to change the baudrate
+[2023-12-26 06:13:49,960] [DXL_Conmunication .DXL_motor_1] [INFO]: pingMotor : [ID:001] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:13:49,992] [DXL_Conmunication .DXL_motor_2] [INFO]: pingMotor : [ID:002] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:13:50,025] [DXL_Conmunication .DXL_motor_3] [INFO]: pingMotor : [ID:003] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:13:50,057] [DXL_Conmunication .DXL_motor_4] [INFO]: pingMotor : [ID:004] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:13:50,088] [DXL_Conmunication .DXL_motor_5] [INFO]: pingMotor : [ID:005] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:13:50,104] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:13:50,120] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:13:50,136] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:13:50,152] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:13:50,168] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:13:53,288] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:13:53,304] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:13:53,320] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:13:53,336] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:13:53,352] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
+[2023-12-26 06:13:56,856] [DXL_Conmunication .DXL_motor_1] [INFO]: disableMotor : Motor1 disarmed SUCCESSFULLY
+[2023-12-26 06:13:56,872] [DXL_Conmunication .DXL_motor_2] [INFO]: disableMotor : Motor2 disarmed SUCCESSFULLY
+[2023-12-26 06:13:56,888] [DXL_Conmunication .DXL_motor_4] [INFO]: disableMotor : Motor4 disarmed SUCCESSFULLY
+[2023-12-26 06:13:56,904] [DXL_Conmunication .DXL_motor_5] [INFO]: disableMotor : Motor5 disarmed SUCCESSFULLY
+[2023-12-26 06:13:56,920] [DXL_Conmunication .DXL_motor_3] [INFO]: disableMotor : Motor3 disarmed SUCCESSFULLY
+[2023-12-26 06:13:56,936] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:13:56,952] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:13:56,968] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:13:56,984] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:13:57,000] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:14:18,887] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:14:18,903] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:14:18,919] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:14:18,935] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:14:18,951] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
+[2023-12-26 06:14:35,952] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to open the port
+[2023-12-26 06:14:35,959] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to change the baudrate
+[2023-12-26 06:14:35,998] [DXL_Conmunication .DXL_motor_1] [INFO]: pingMotor : [ID:001] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:14:36,030] [DXL_Conmunication .DXL_motor_2] [INFO]: pingMotor : [ID:002] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:14:36,062] [DXL_Conmunication .DXL_motor_3] [INFO]: pingMotor : [ID:003] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:14:36,094] [DXL_Conmunication .DXL_motor_4] [INFO]: pingMotor : [ID:004] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:14:36,126] [DXL_Conmunication .DXL_motor_5] [INFO]: pingMotor : [ID:005] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:14:36,142] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:14:36,158] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:14:36,174] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:14:36,190] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:14:36,206] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:14:39,326] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:14:39,342] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:14:39,358] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:14:39,374] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:14:39,390] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
+[2023-12-26 06:14:45,598] [DXL_Conmunication .DXL_motor_1] [INFO]: disableMotor : Motor1 disarmed SUCCESSFULLY
+[2023-12-26 06:14:45,614] [DXL_Conmunication .DXL_motor_2] [INFO]: disableMotor : Motor2 disarmed SUCCESSFULLY
+[2023-12-26 06:14:45,630] [DXL_Conmunication .DXL_motor_4] [INFO]: disableMotor : Motor4 disarmed SUCCESSFULLY
+[2023-12-26 06:14:45,646] [DXL_Conmunication .DXL_motor_5] [INFO]: disableMotor : Motor5 disarmed SUCCESSFULLY
+[2023-12-26 06:14:45,662] [DXL_Conmunication .DXL_motor_3] [INFO]: disableMotor : Motor3 disarmed SUCCESSFULLY
+[2023-12-26 06:14:45,678] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:14:45,694] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:14:45,710] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:14:45,726] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:14:45,742] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:15:15,725] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:15:15,741] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:15:15,757] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:15:15,773] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:15:15,788] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
+[2023-12-26 06:15:33,831] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to open the port
+[2023-12-26 06:15:33,838] [DXL_Conmunication] [INFO]: activateDXLConnection : Succeeded to change the baudrate
+[2023-12-26 06:15:33,878] [DXL_Conmunication .DXL_motor_1] [INFO]: pingMotor : [ID:001] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:15:33,910] [DXL_Conmunication .DXL_motor_2] [INFO]: pingMotor : [ID:002] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:15:33,942] [DXL_Conmunication .DXL_motor_3] [INFO]: pingMotor : [ID:003] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:15:33,974] [DXL_Conmunication .DXL_motor_4] [INFO]: pingMotor : [ID:004] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:15:34,006] [DXL_Conmunication .DXL_motor_5] [INFO]: pingMotor : [ID:005] ping Succeeded. Dynamixel model number : 1060
+[2023-12-26 06:15:34,022] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:15:34,038] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:15:34,054] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:15:34,070] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:15:34,086] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:15:37,206] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:15:37,222] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:15:37,238] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:15:37,254] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:15:37,270] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
+[2023-12-26 06:15:42,069] [DXL_Conmunication .DXL_motor_1] [INFO]: disableMotor : Motor1 disarmed SUCCESSFULLY
+[2023-12-26 06:15:42,085] [DXL_Conmunication .DXL_motor_2] [INFO]: disableMotor : Motor2 disarmed SUCCESSFULLY
+[2023-12-26 06:15:42,101] [DXL_Conmunication .DXL_motor_4] [INFO]: disableMotor : Motor4 disarmed SUCCESSFULLY
+[2023-12-26 06:15:42,117] [DXL_Conmunication .DXL_motor_5] [INFO]: disableMotor : Motor5 disarmed SUCCESSFULLY
+[2023-12-26 06:15:42,133] [DXL_Conmunication .DXL_motor_3] [INFO]: disableMotor : Motor3 disarmed SUCCESSFULLY
+[2023-12-26 06:15:42,149] [DXL_Conmunication .DXL_motor_1] [INFO]: rebootMotor : [ID:1] reboot Succeeded
+[2023-12-26 06:15:42,165] [DXL_Conmunication .DXL_motor_2] [INFO]: rebootMotor : [ID:2] reboot Succeeded
+[2023-12-26 06:15:42,181] [DXL_Conmunication .DXL_motor_3] [INFO]: rebootMotor : [ID:3] reboot Succeeded
+[2023-12-26 06:15:42,197] [DXL_Conmunication .DXL_motor_4] [INFO]: rebootMotor : [ID:4] reboot Succeeded
+[2023-12-26 06:15:42,213] [DXL_Conmunication .DXL_motor_5] [INFO]: rebootMotor : [ID:5] reboot Succeeded
+[2023-12-26 06:16:35,043] [DXL_Conmunication .DXL_motor_1] [INFO]: enableMotor : Motor1 is successfully armed
+[2023-12-26 06:16:35,059] [DXL_Conmunication .DXL_motor_2] [INFO]: enableMotor : Motor2 is successfully armed
+[2023-12-26 06:16:35,075] [DXL_Conmunication .DXL_motor_4] [INFO]: enableMotor : Motor4 is successfully armed
+[2023-12-26 06:16:35,091] [DXL_Conmunication .DXL_motor_5] [INFO]: enableMotor : Motor5 is successfully armed
+[2023-12-26 06:16:35,107] [DXL_Conmunication .DXL_motor_3] [INFO]: enableMotor : Motor3 is successfully armed
