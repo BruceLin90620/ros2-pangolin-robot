@@ -2,10 +2,15 @@
 
 import rclpy
 from rclpy.node import Node
+from rclpy.action import ActionServer, CancelResponse, GoalResponse
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
 from std_srvs.srv import SetBool
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 from sensor_msgs.msg import Imu
+from pangollin_interfaces.action import PangolinAction
+
 import time
 import os, sys, math
 import numpy as np
@@ -16,6 +21,7 @@ import threading
 sys.path.append('/home/ubuntu/pangolin_ws/ros2-pangolin-robot/pangolin_control/driver')
 # sys.path.append('/home/puppypi/puppypi_ws/src/puppy_control/driver')
 from Pangolin_ControlCmd import PangolinControl
+# from Pangolin_ActionGroups import action_dic
 from Pangolin_Config import *
 
 
@@ -27,6 +33,10 @@ class Pangolin(Node):
         self.joy_subscriber_ = self.create_subscription(Joy, 'joy', self.joy_callback, 0)
         self.imu_subscriber_ = self.create_subscription(Imu, 'imu', self.imu_callback, 1)
         self.cmd_vel_subscriber_ = self.create_subscription(Twist, 'cmd_vel', self.cmd_vel_callback, 1)
+        self.pangolin_action_server_ = ActionServer( self, PangolinAction, 'pangolin_action', execute_callback=self.pangolin_execute_callback,
+                                                     callback_group = ReentrantCallbackGroup(), goal_callback = self.pangolin_goal_callback,
+                                                     handle_accepted_callback = self.handle_accepted_callback, cancel_callback = self.pangolin_cancel_callback)
+        
 
         self.is_first_time = True
         self.is_disalbe_motor = False
@@ -37,12 +47,15 @@ class Pangolin(Node):
         self.last_joy_msgs_buttons = []
         self.time_1 = 0
 
-# destroy ros    
+    # destroy ros    
     def destroy(self):
         self.cmd_vel_subscriber_.destroy()
+        # self.imu_subscriber_.destroy()
+        self.pangolin_action_server_.destroy()
         super().destroy_node()
-    
 
+    #Pangolin_action_server_....(12/27)
+    
     def joy_callback(self, msg):
         # X:0, A:1, B:2, Y:3
         # LB:4, RB:5, LT:6, RT:7
