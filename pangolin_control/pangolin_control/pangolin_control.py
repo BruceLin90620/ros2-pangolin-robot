@@ -232,8 +232,8 @@ class Pangolin(Node):
                 self.control_cmd.stop_gait()
         
         # head control
-        if round(msg.linear.y, 0) or round(msg.linear.z, 0) != 0:
-            self.get_logger().info(f'linear.y: {msg.linear.y} linear.z: {msg.linear.z}')
+        # if round(msg.linear.y, 0) or round(msg.linear.z, 0) != 0:
+        #     self.get_logger().info(f'linear.y: {msg.linear.y} linear.z: {msg.linear.z}')
         
         self.control_cmd.head_control(msg.linear.y, msg.linear.z)
 

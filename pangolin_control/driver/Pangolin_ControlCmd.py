@@ -88,7 +88,7 @@ class PangolinControl:
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
                                                                         "motor4":self.inverse_kinematic(           0, 'motor4'), 
                                                                         "motor5":self.inverse_kinematic( leg_forward, 'motor5')})
-                
+
                 if self.is_walking == False: break
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic(           0, 'motor2'), 
@@ -102,7 +102,7 @@ class PangolinControl:
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
                                                                         "motor4":self.inverse_kinematic( leg_forward, 'motor4'), 
                                                                         "motor5":self.inverse_kinematic(leg_backward, 'motor5')})
-                
+
                 if self.is_walking == False: break
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic( leg_forward, 'motor2'), 
