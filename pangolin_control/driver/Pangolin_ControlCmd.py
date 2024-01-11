@@ -5,15 +5,20 @@ import traceback
 import json 
 import threading
 import log
+from time import sleep
+from Board import setPWMServoPulse
 from Pangolin_ActionGroups import action_dic
 from Pangolin_Config import *
 from Pangolin_Stance import PangolinStance
+
 
 class PangolinControl:
     def __init__(self):
         self.control_cmd = ControlCmd()
         self.stance_cmd = PangolinStance()
         self.motor_center_position = {'motor1': 1535, 'motor2': 2561, 'motor3': 992, 'motor4': 2567, 'motor5': 1525}
+        setPWMServoPulse(5, 1500, 100)
+        setPWMServoPulse(6, 1500, 100)
         
         self.init_fail = False
         self.is_walking = False
@@ -260,7 +265,7 @@ class PangolinControl:
                                                                     "motor4":action[i]["motor4"], 
                                                                     "motor5":action[i]["motor5"]})
             # print(i)
-            time.sleep(0.1)
+            time.sleep(0.5)
 
     def run_action_stand_up(self, action_name = 'stand_up'):
         action = action_dic[action_name]
@@ -288,9 +293,14 @@ class PangolinControl:
         
         return self.stance_cmd.motor_pos
     
+    #Head
+    def head_control(self, LeftRight, UpDown):
+        setPWMServoPulse(5, int(LeftRight*500+1500), 100)
+        setPWMServoPulse(6, int(UpDown*200+1500), 100)
+        sleep(0.15)
 
 class ControlCmd:
-    def __init__(self):
+    def __init__(self): 
 
         #Record path
         self.record_path = 'output.txt'

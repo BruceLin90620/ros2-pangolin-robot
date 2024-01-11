@@ -7,24 +7,26 @@ action_dic =    {
                     ],
                                 
                     'get_down': [ 
-                        {"motor1": 1423, "motor2": 2672, "motor3": 1025, "motor4": 2672, "motor5": 1423},
-                        {'motor1': 1423, 'motor2': 2679, 'motor3': 1025, 'motor4': 2672, 'motor5': 406},
-                        {'motor1': 1423, 'motor2': 2679, 'motor3': 1025, 'motor4': 2672, 'motor5': 406},
-                        {'motor1': 1423, 'motor2': 2679, 'motor3': 1025, 'motor4': 2672, 'motor5': 406},
+                        # {"motor1": 1423, "motor2": 2672, "motor3": 1025, "motor4": 2672, "motor5": 1423},
+                        # {'motor1': 1423, 'motor2': 2679, 'motor3': 1025, 'motor4': 2672, 'motor5': 406},
+                        # {'motor1': 1423, 'motor2': 2679, 'motor3': 1025, 'motor4': 2672, 'motor5': 406},
+                        # {'motor1': 1423, 'motor2': 2679, 'motor3': 1025, 'motor4': 2672, 'motor5': 406},
 
-                        #shake_leg 
-                        {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2762, 'motor5': 466},
-                        {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2457, 'motor5': 466},
-                        {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2762, 'motor5': 466},
-                        {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2457, 'motor5': 466},
-                        {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2457, 'motor5': 466},
-                        {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2762, 'motor5': 466},
+                        # #shake_leg 
+                        # {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2762, 'motor5': 466},
+                        # {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2457, 'motor5': 466},
+                        # {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2762, 'motor5': 466},
+                        # {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2457, 'motor5': 466},
+                        # {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2457, 'motor5': 466},
+                        # {'motor1': 1423, 'motor2': 2678, 'motor3': 1025, 'motor4': 2762, 'motor5': 466},
 
-                        #lie_down
-                        {'motor1': 1423, 'motor2': 2677, 'motor3': 1025, 'motor4': 2672, 'motor5': 1423},
+                        # #lie_down
+                        # {'motor1': 1423, 'motor2': 2677, 'motor3': 1025, 'motor4': 2672, 'motor5': 1423},
 
-                        #curl
-                        {'motor1': 1624, 'motor2': 2404, 'motor3': 1929, 'motor4': 2508, 'motor5': 1659}
+                        # #curl
+                        # {'motor1': 1624, 'motor2': 2404, 'motor3': 1929, 'motor4': 2508, 'motor5': 1659}
+                        {'motor1': 919, 'motor2': 2562, 'motor3': 978, 'motor4': 3190, 'motor5': 1548},
+                        {'motor1': 1510, 'motor2': 3634, 'motor3': 978, 'motor4': 2545, 'motor5': 425}
                     ],
 
                     'stand_up': [

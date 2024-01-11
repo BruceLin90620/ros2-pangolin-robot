@@ -9,7 +9,7 @@ from std_srvs.srv import SetBool
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 from sensor_msgs.msg import Imu
-from pangollin_interfaces.action import PangolinAction
+from pangolin_interfaces.action import PangolinAction
 
 import time
 import os, sys, math
@@ -21,8 +21,9 @@ import threading
 sys.path.append('/home/ubuntu/pangolin_ws/ros2-pangolin-robot/pangolin_control/driver')
 # sys.path.append('/home/puppypi/puppypi_ws/src/puppy_control/driver')
 from Pangolin_ControlCmd import PangolinControl
-# from Pangolin_ActionGroups import action_dic
+from Pangolin_ActionGroups import action_dic
 from Pangolin_Config import *
+from Board import setPWMServoPulse
 
 
 class Pangolin(Node):
@@ -33,11 +34,13 @@ class Pangolin(Node):
         self.joy_subscriber_ = self.create_subscription(Joy, 'joy', self.joy_callback, 0)
         self.imu_subscriber_ = self.create_subscription(Imu, 'imu', self.imu_callback, 1)
         self.cmd_vel_subscriber_ = self.create_subscription(Twist, 'cmd_vel', self.cmd_vel_callback, 1)
-        self.pangolin_action_server_ = ActionServer( self, PangolinAction, 'pangolin_action', execute_callback=self.pangolin_execute_callback,
-                                                     callback_group = ReentrantCallbackGroup(), goal_callback = self.pangolin_goal_callback,
-                                                     handle_accepted_callback = self.handle_accepted_callback, cancel_callback = self.pangolin_cancel_callback)
         
-
+        # self.pangolin_action_server_ = ActionServer( self, PangolinAction, 'pangolin_action', execute_callback=self.pangolin_execute_callback,
+        #                                              callback_group = ReentrantCallbackGroup(), goal_callback = self.pangolin_goal_callback,
+        #                                              handle_accepted_callback = self.handle_accepted_callback, cancel_callback = self.pangolin_cancel_callback)
+        
+        self._goal_lock = threading.Lock()
+        self._goal_handle = None
         self.is_first_time = True
         self.is_disalbe_motor = False
         self.is_freedom_mode = False
@@ -51,10 +54,54 @@ class Pangolin(Node):
     def destroy(self):
         self.cmd_vel_subscriber_.destroy()
         # self.imu_subscriber_.destroy()
-        self.pangolin_action_server_.destroy()
+        # self.pangolin_action_server_.destroy()
         super().destroy_node()
 
-    #Pangolin_action_server_....(12/27)
+    #Pangolin_action_server_
+    # def handle_accepted_callback(self, goal_handle):
+    #     with self._goal_lock:
+    #         # This server only allows one goal at a time
+    #         if self._goal_handle is not None and self._goal_handle.is_active:
+    #             self.get_logger().info('Aborting previous goal')
+    #             self._goal_handle.abort()
+    #         self._goal_handle = goal_handle
+    #     goal_handle.execute()
+
+    # def pangolin_goal_callback(self, goal_request):
+    #     """Accept or reject a client request to begin an action."""
+    #     # This server allows multiple goals in parallel
+    #     self.get_logger().info('Received goal request')
+    #     return GoalResponse.ACCEPT
+    
+    # def pangolin_cancel_callback(self, goal_handle):
+    #     """Accept or reject a client request to cancel an action."""
+    #     self.get_logger().info('Received cancel request')
+    #     return CancelResponse.ACCEPT
+    
+    # def pangolin_execute_callback(self, goal_handle):
+    #     """Execute a goal."""
+    #     self.get_logger().info('Executing goal...')
+    #     feedback_msg = PangolinAction.Feedback()
+
+    #     if goal_handle.request.act_name in action_dic:
+    #         requested_action = goal_handle.request.act_name
+    #         if requested_action == 'get_down':
+    #             self.control_cmd.run_action_get_down()
+    #         elif requested_action == "stand_up":
+    #             self.control_cmd.run_action_stand_up()
+
+    #         feedback_msg.which_action = requested_action
+
+    #         self.get_logger().info("Publishing feedback: {0}".format(feedback_msg.which_action))
+    #         goal_handle.Publish_feedback(feedback_msg)
+    #         time.sleep(1)
+        
+    #     goal_handle.succeed()
+    #     #Populate result message
+    #     result = PangolinAction.Result()
+    #     result.success = True
+    #     self.get_logger().info('Returning result: {0}'.format(result.success))
+    #     return result
     
     def joy_callback(self, msg):
         # X:0, A:1, B:2, Y:3
@@ -150,7 +197,7 @@ class Pangolin(Node):
 # Pangolin cmd_vel callback
     def cmd_vel_callback(self, msg):
 
-        # self.get_logger().info(f'linear.x: {msg.linear.x} angular.z: {msg.angular.z}')
+        # self.get_logger().info(f'linear.x: {msg.linear.x} angular.z: {msg.angular.z} linear.y: {msg.linear.y} linear.z: {msg.linear.z}')
 
         # self.control_cmd.set_servo_rate([msg.linear.x - msg.angular.z, msg.linear.x + msg.angular.z])
 
@@ -183,6 +230,12 @@ class Pangolin(Node):
             if self.control_cmd.is_walking == True:
                 # self.get_logger().info(f'cmd_vel stop')
                 self.control_cmd.stop_gait()
+        
+        # head control
+        if round(msg.linear.y, 0) or round(msg.linear.z, 0) != 0:
+            self.get_logger().info(f'linear.y: {msg.linear.y} linear.z: {msg.linear.z}')
+        
+        self.control_cmd.head_control(msg.linear.y, msg.linear.z)
 
 # Pangolin imu callback
     def imu_callback(self, msg):
