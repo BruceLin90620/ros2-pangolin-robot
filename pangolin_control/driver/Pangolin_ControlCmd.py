@@ -270,6 +270,7 @@ class PangolinControl:
             time.sleep(1)
 
     def run_action_get_down(self, action_name = 'get_down'):
+        setPWMServoPulse(6, 1700, 100)
         action = action_dic[action_name]
         for i in range(len(action)):
             self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], 

@@ -232,7 +232,7 @@ class Pangolin(Node):
                 self.control_cmd.stop_gait()
         
         # head control
-        if (self.control_cmd.is_walking == False) and (self.control_cmd.is_turning == False):
+        if (self.control_cmd.is_walking == False) and (self.control_cmd.is_turning == False) and (self.is_curl == False):
             self.control_cmd.head_control(msg.linear.y, msg.linear.z)
 
 # Pangolin imu callback
