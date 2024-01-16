@@ -1,5 +1,4 @@
 # ros2-pangolin-robot
-2024/1/11
 
 ## **Requirements**
 
@@ -16,6 +15,7 @@ $ git clone https://github.com/BruceLin90620/ros2-pangolin-robot.git
 ```
 $ git checkout dev
 ```
+
 - build: 
 ```
 $ colcon build --symlink-install
@@ -38,6 +38,9 @@ $ sudo python setup.py install
 
 
 ### Pangolin Start
+```
+$ ./start.sh
+```
 ```
 $ ros2 launch pangolin_bringup pangolin_bringup.launch.py
 ```
