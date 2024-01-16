@@ -197,19 +197,19 @@ class Pangolin(Node):
 # Pangolin cmd_vel callback
     def cmd_vel_callback(self, msg):
 
-        # self.get_logger().info(f'linear.x: {msg.linear.x} angular.z: {msg.angular.z} linear.y: {msg.linear.y} linear.z: {msg.linear.z}')
+        # self.get_logger().info(f'linear.x: {msg.linear.x} angular.z: {msg.angular.z}')
 
         # self.control_cmd.set_servo_rate([msg.linear.x - msg.angular.z, msg.linear.x + msg.angular.z])
 
-        if round(msg.linear.x, 0) != 0:
-            
+        if round(msg.linear.x, 0) != 0 and abs(msg.angular.z) < 0.5:
+    
             self.control_cmd.set_servo_rate([msg.linear.x, msg.linear.x])
             if self.control_cmd.is_walking == False:
                 self.get_logger().info(f'cmd_vel linear')
                 self.control_cmd.set_gait_name('move_linear')
                 self.control_cmd.start_gait()
 
-        elif round(msg.angular.z, 0) < 0:
+        elif round(msg.angular.z, 0) < 0 and abs(msg.linear.x) < 0.5:
             
             self.control_cmd.set_servo_rate([msg.angular.z, msg.angular.z])
             if self.control_cmd.is_walking == False:
@@ -217,7 +217,7 @@ class Pangolin(Node):
                 self.control_cmd.set_gait_name('turn_right')
                 self.control_cmd.start_gait()
 
-        elif round(msg.angular.z, 0) > 0:
+        elif round(msg.angular.z, 0) > 0 and abs(msg.linear.x) < 0.5:
             
             self.control_cmd.set_servo_rate([-msg.angular.z, -msg.angular.z])
             if self.control_cmd.is_walking == False:
@@ -232,10 +232,8 @@ class Pangolin(Node):
                 self.control_cmd.stop_gait()
         
         # head control
-        # if round(msg.linear.y, 0) or round(msg.linear.z, 0) != 0:
-        #     self.get_logger().info(f'linear.y: {msg.linear.y} linear.z: {msg.linear.z}')
-        
-        self.control_cmd.head_control(msg.linear.y, msg.linear.z)
+        if (self.control_cmd.is_walking == False) and (self.control_cmd.is_turning == False):
+            self.control_cmd.head_control(msg.linear.y, msg.linear.z)
 
 # Pangolin imu callback
     def imu_callback(self, msg):

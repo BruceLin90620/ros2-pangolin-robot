@@ -22,6 +22,7 @@ class PangolinControl:
         
         self.init_fail = False
         self.is_walking = False
+        self.is_turning = False
         
         self.x = 0
         self.z = LEG_HEIGHT
@@ -76,6 +77,7 @@ class PangolinControl:
         if self.gait_name == 'move_linear':
             while True:
                 if self.is_walking == False: break
+                setPWMServoPulse(5, 1700, 100)
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic( leg_forward, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic(leg_backward, 'motor2'), 
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
@@ -90,20 +92,23 @@ class PangolinControl:
                                                                         "motor5":self.inverse_kinematic( leg_forward, 'motor5')})
 
                 if self.is_walking == False: break
+                setPWMServoPulse(5, 1500, 100)
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic(           0, 'motor2'), 
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
                                                                         "motor4":self.inverse_kinematic(           0, 'motor4'), 
                                                                         "motor5":self.inverse_kinematic(leg_backward, 'motor5')})
                 
+
                 if self.is_walking == False: break
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(leg_backward, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic( leg_forward, 'motor2'), 
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
                                                                         "motor4":self.inverse_kinematic( leg_forward, 'motor4'), 
                                                                         "motor5":self.inverse_kinematic(leg_backward, 'motor5')})
-
+                
                 if self.is_walking == False: break
+                setPWMServoPulse(5, 1300, 100)
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic( leg_forward, 'motor2'), 
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
@@ -116,10 +121,14 @@ class PangolinControl:
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
                                                                         "motor4":self.inverse_kinematic(leg_backward, 'motor4'),
                                                                         "motor5":self.inverse_kinematic(           0, 'motor5')})
+                setPWMServoPulse(5, 1500, 100)
+
+                
 
         elif self.gait_name == 'turn_right':
             while True:
                 if self.is_walking == False: break
+                setPWMServoPulse(5, 1300, 100)
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic(turn_backward, 'motor2'), 
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'),
@@ -150,6 +159,7 @@ class PangolinControl:
         elif self.gait_name == 'turn_left':
             while True:
                 if self.is_walking == False: break
+                setPWMServoPulse(5, 1700, 100)
                 self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(           0, 'motor1'), 
                                                                         "motor2":self.inverse_kinematic(           0, 'motor2'), 
                                                                         "motor3":self.inverse_kinematic(           0, 'motor3'), 
@@ -180,12 +190,15 @@ class PangolinControl:
     # Start moving 
     def start_gait(self):
         self.is_walking = True
+        self.is_turning = True
+
         self.walking_thread = threading.Thread(target=self.process_gait, args=(), daemon=True)
         self.walking_thread.start()
 
     # Stop moving 
     def stop_gait(self):
         self.is_walking = False
+        self.is_turning = False
 
         self.reset_to_orginal()
 
@@ -295,7 +308,7 @@ class PangolinControl:
     
     #Head
     def head_control(self, LeftRight, UpDown):
-        setPWMServoPulse(5, int(LeftRight*500+1500), 100)
+        setPWMServoPulse(5, int(LeftRight*300+1500), 100)
         setPWMServoPulse(6, int(UpDown*200+1500), 100)
         sleep(0.15)
 
