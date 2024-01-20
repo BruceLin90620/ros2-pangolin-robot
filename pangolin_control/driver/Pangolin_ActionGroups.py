@@ -25,6 +25,8 @@ action_dic =    {
 
                         #curl
                         {'motor1': 1624, 'motor2': 2404, 'motor3': 1929, 'motor4': 2508, 'motor5': 1659}
+                        # {'motor1': 919, 'motor2': 2562, 'motor3': 978, 'motor4': 3190, 'motor5': 1548},
+                        # {'motor1': 1510, 'motor2': 3634, 'motor3': 978, 'motor4': 2545, 'motor5': 425}
                     ],
 
                     'stand_up': [

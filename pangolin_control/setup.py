@@ -23,7 +23,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pangolin_control = pangolin_control.pangolin_control:main'
+            'pangolin_control = pangolin_control.pangolin_control:main',
+            # 'pangolin_action_client = pangolin_control.pangolin_action_client:main',
+            'pangolin_imu = pangolin_control.pangolin_imu:main'
         ],
     },
 )
