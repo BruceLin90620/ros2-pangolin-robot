@@ -233,7 +233,7 @@ class Pangolin(Node):
         
         # head control
         if (self.control_cmd.is_walking == False) and (self.control_cmd.is_turning == False) and (self.is_curl == False):
-            self.control_cmd.head_control(msg.linear.y, msg.linear.z)
+            self.control_cmd.head_control(msg.linear.y, -(msg.linear.z))
 
 # Pangolin imu callback
     def imu_callback(self, msg):

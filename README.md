@@ -6,6 +6,7 @@
 - [ROS2 humble](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
 
 ### RaspberryPI environment setup
+- [GPIO root setup](https://forum.up-community.org/discussion/2141/solved-tutorial-gpio-i2c-spi-access-without-root-permissions)
 ```
 $ mkdir pangolin_ws && cd pangolin_ws
 ```
@@ -18,10 +19,16 @@ $ git checkout dev
 
 - build: 
 ```
-$ colcon build --symlink-install
+$ sudo apt install python3-pip
+$ sudo pip3 install pigpio
+$ sudo pip3 install RPi.GPIO
+$ sudo pip3 install smbus2
 ```
 ```
 $ pip3 install setuptools==58.2.0
+```
+```
+$ colcon build --symlink-install
 ```
 ```
 $ sudo apt install ros-humble-joy && sudo apt install ros-humble-teleop-twist-joy
