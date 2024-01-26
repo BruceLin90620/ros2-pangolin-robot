@@ -269,7 +269,7 @@ class PangolinControl:
             # print(i)
             time.sleep(1)
 
-    def run_action_get_down(self, action_name = 'get_down'):
+    def run_action_get_down_right(self, action_name = 'get_down_right'):
         setPWMServoPulse(6, 1700, 100)
         action = action_dic[action_name]
         for i in range(len(action)):
@@ -279,9 +279,32 @@ class PangolinControl:
                                                                     "motor4":action[i]["motor4"], 
                                                                     "motor5":action[i]["motor5"]})
             # print(i)
-            time.sleep(0.05)
+            time.sleep(0.08)
 
-    def run_action_stand_up(self, action_name = 'stand_up'):
+    def run_action_get_down_left(self, action_name = 'get_down_left'):
+        setPWMServoPulse(6, 1700, 100)
+        action = action_dic[action_name]
+        for i in range(len(action)):
+            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], 
+                                                                    "motor2":action[i]["motor2"], 
+                                                                    "motor3":action[i]["motor3"], 
+                                                                    "motor4":action[i]["motor4"], 
+                                                                    "motor5":action[i]["motor5"]})
+            # print(i)
+            time.sleep(0.08)        
+
+    def run_action_stand_up_from_right(self, action_name = 'stand_up_from_right'):
+        action = action_dic[action_name]
+        for i in range(len(action)):
+            self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], 
+                                                                    "motor2":action[i]["motor2"], 
+                                                                    "motor3":action[i]["motor3"], 
+                                                                    "motor4":action[i]["motor4"], 
+                                                                    "motor5":action[i]["motor5"]})
+            # print(i)
+            time.sleep(1)
+
+    def run_action_stand_up_from_left(self, action_name = 'stand_up_from_left'):
         action = action_dic[action_name]
         for i in range(len(action)):
             self.control_cmd.leg_motor_position_control(position = {"motor1":action[i]["motor1"], 
@@ -409,8 +432,10 @@ if __name__ == "__main__":
         "pos":pangolin_control.control_cmd.leg_motor_position_control,
         # "led":pangolin_control.start_led_blink,
         "curl":pangolin_control.run_action_curl,
-        "getdown":pangolin_control.run_action_get_down,
-        "standup":pangolin_control.run_action_stand_up,
+        "getdown_right":pangolin_control.run_action_get_down_right,
+        "getdown_left":pangolin_control.run_action_get_down_left,
+        "standup_right":pangolin_control.run_action_stand_up_from_right,
+        "standup_left":pangolin_control.run_action_stand_up_from_left,
         "reset":pangolin_control.reset_to_orginal,
         "stance":pangolin_control.stance_control,
     }

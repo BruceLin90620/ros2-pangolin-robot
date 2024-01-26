@@ -146,19 +146,28 @@ class Pangolin(Node):
             self.control_cmd.reset_to_orginal()
 
     # Curl action mode
-        if msg.buttons[2] != self.last_joy_msgs_buttons[2]:
-            self.get_logger().info(f'Curl action mode')
+        if msg.buttons[7] != self.last_joy_msgs_buttons[7]:
+            self.get_logger().info(f'Curl action mode (right)')
             if self.is_curl == False:
-                self.control_cmd.run_action_get_down()
+                self.control_cmd.run_action_get_down_right()
                 self.is_curl = True
             else:
-                self.control_cmd.run_action_stand_up()
+                self.control_cmd.run_action_stand_up_from_right()
+                self.is_curl = False
+
+    # Curl action mode
+        if msg.buttons[6] != self.last_joy_msgs_buttons[6]:
+            self.get_logger().info(f'Curl action mode (left)')
+            if self.is_curl == False:
+                self.control_cmd.run_action_get_down_left()
+                self.is_curl = True
+            else:
+                self.control_cmd.run_action_stand_up_from_left()
                 self.is_curl = False
 
     # Freedom control mode
         if msg.buttons[3] != self.last_joy_msgs_buttons[3]:
             self.is_freedom_mode = not self.is_freedom_mode
-            
 
         if self.is_freedom_mode == True:
             self.control_cmd.control_cmd.leg_motor_position_control(position = {"motor1":int(msg.axes[0]*1000 + self.control_cmd.motor_center_position["motor1"]), 
