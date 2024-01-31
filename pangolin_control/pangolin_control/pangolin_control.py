@@ -145,7 +145,7 @@ class Pangolin(Node):
             self.get_logger().info(f'Reset mode')
             self.control_cmd.reset_to_orginal()
 
-    # Curl action mode
+    # Down & Curl action mode(right)
         if msg.buttons[7] != self.last_joy_msgs_buttons[7]:
             self.get_logger().info(f'Curl action mode (right)')
             if self.is_curl == False:
@@ -155,7 +155,7 @@ class Pangolin(Node):
                 self.control_cmd.run_action_stand_up_from_right()
                 self.is_curl = False
 
-    # Curl action mode
+    # Down & Curl action mode(left)
         if msg.buttons[6] != self.last_joy_msgs_buttons[6]:
             self.get_logger().info(f'Curl action mode (left)')
             if self.is_curl == False:
