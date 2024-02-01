@@ -50,6 +50,11 @@ class Pangolin(Node):
         self.last_joy_msgs_buttons = []
         self.time_1 = 0
 
+        #imu
+        self.pitch = None
+        self.roll = None
+        self.yaw = None
+
     # destroy ros    
     def destroy(self):
         self.cmd_vel_subscriber_.destroy()
@@ -145,25 +150,59 @@ class Pangolin(Node):
             self.get_logger().info(f'Reset mode')
             self.control_cmd.reset_to_orginal()
 
+    # Down & Curl action mode(left)
+        if msg.buttons[6] != self.last_joy_msgs_buttons[6] and self.is_curl == False:
+            self.get_logger().info(f'Curl action mode (left)')
+            self.control_cmd.run_action_get_down_left()
+            self.is_curl = True
+
+
+            # if self.is_curl == False:
+            #     self.control_cmd.run_action_get_down_left()
+            #     self.is_curl = True
+            #     self.get_logger().info(f'is_curl: {self.is_curl}')
+            # else:
+            #     if self.roll >= 70:
+            #         self.control_cmd.run_action_stand_up_from_right()
+            #         self.is_curl = False
+            #     elif self.roll <= -70:
+            #         self.control_cmd.run_action_stand_up_from_left()
+            #         self.is_curl = False
+            #     self.is_curl = False    
+
     # Down & Curl action mode(right)
-        if msg.buttons[7] != self.last_joy_msgs_buttons[7]:
+        if msg.buttons[7] != self.last_joy_msgs_buttons[7] and self.is_curl == False:
             self.get_logger().info(f'Curl action mode (right)')
-            if self.is_curl == False:
-                self.control_cmd.run_action_get_down_right()
-                self.is_curl = True
-            else:
+            self.control_cmd.run_action_get_down_right()
+            self.is_curl = True
+
+            # if self.is_curl == False:
+            #     self.control_cmd.run_action_get_down_right()
+            #     self.is_curl = True
+            # else:
+            #     if self.roll >= 70:
+            #         self.control_cmd.run_action_stand_up_from_right()
+            #         self.is_curl = False
+            #     elif self.roll <= -70:
+            #         self.control_cmd.run_action_stand_up_from_left()
+            #         self.is_curl = False
+            #     self.is_curl = False
+        
+        if msg.buttons[2] != self.last_joy_msgs_buttons[2] and self.is_curl == True:
+            if self.roll >= 70:
                 self.control_cmd.run_action_stand_up_from_right()
                 self.is_curl = False
-
-    # Down & Curl action mode(left)
-        if msg.buttons[6] != self.last_joy_msgs_buttons[6]:
-            self.get_logger().info(f'Curl action mode (left)')
-            if self.is_curl == False:
-                self.control_cmd.run_action_get_down_left()
-                self.is_curl = True
-            else:
+            elif self.roll <= -70:
                 self.control_cmd.run_action_stand_up_from_left()
                 self.is_curl = False
+
+        
+        # self.get_logger().info(f'button      right:{msg.buttons[7]}')
+        # self.get_logger().info(f'button right last:{self.last_joy_msgs_buttons[7]}')
+        # self.get_logger().info(f'button       left:{msg.buttons[6]}')
+        # self.get_logger().info(f'button left  last:{self.last_joy_msgs_buttons[6]}')
+        # self.get_logger().info(f'is_curl: {self.is_curl}')
+
 
     # Freedom control mode
         if msg.buttons[3] != self.last_joy_msgs_buttons[3]:
@@ -202,12 +241,12 @@ class Pangolin(Node):
             pass
 
         self.last_joy_msgs_buttons = msg.buttons
+        # self.get_logger().info(f'roll: {self.roll}')
 
 # Pangolin cmd_vel callback
     def cmd_vel_callback(self, msg):
 
         # self.get_logger().info(f'linear.x: {msg.linear.x} angular.z: {msg.angular.z}')
-
         # self.control_cmd.set_servo_rate([msg.linear.x - msg.angular.z, msg.linear.x + msg.angular.z])
 
         if round(msg.linear.x, 0) != 0 and abs(msg.angular.z) < 0.5:
@@ -254,13 +293,14 @@ class Pangolin(Node):
         self.q3 = msg.orientation.w
 
         # Calculate eular angle
-        pitch = -math.asin(-2*self.q1*self.q3+2*self.q0*self.q2)*57.3
-        roll = math.atan2(2*self.q2*self.q3+2*self.q0*self.q1,-2*self.q1*self.q1-2*self.q2*self.q2+1)*57.3
-        yaw = math.atan2(2*(self.q1*self.q2 + self.q0*self.q3),self.q0*self.q0+self.q1*self.q1-self.q2*self.q2-self.q3*self.q3)*57.3
+        self.pitch = -math.asin(-2*self.q1*self.q3+2*self.q0*self.q2)*57.3
+        self.roll = math.atan2(2*self.q2*self.q3+2*self.q0*self.q1,-2*self.q1*self.q1-2*self.q2*self.q2+1)*57.3
+        self.yaw = math.atan2(2*(self.q1*self.q2 + self.q0*self.q3),self.q0*self.q0+self.q1*self.q1-self.q2*self.q2-self.q3*self.q3)*57.3
 
         # self.get_logger().info(f'pitch: {pitch}')
-        self.get_logger().info(f'roll: {roll}')
+        # self.get_logger().info(f'roll: {self.roll}')
         # self.get_logger().info(f'yaw: {yaw}')
+
         # Detect wether the robot has fallen over, then stand up.
         # if abs(roll) < 70 :
         #     self.time_1 = time.time()

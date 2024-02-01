@@ -44,7 +44,9 @@ class PangolinControl:
 
 
     # Reset to the original state
-    def reset_to_orginal(self):    
+    def reset_to_orginal(self):  
+        setPWMServoPulse(5, 1500, 100)
+        setPWMServoPulse(6, 1500, 100)  
         self.control_cmd.leg_motor_position_control(position = {"motor1":self.inverse_kinematic(0, 'motor1'), 
                                                                 "motor2":self.inverse_kinematic(0, 'motor2'), 
                                                                 "motor3":self.inverse_kinematic(0, 'motor3'),
