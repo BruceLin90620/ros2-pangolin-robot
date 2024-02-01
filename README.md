@@ -62,7 +62,9 @@ $ ros2 topic echo /joy
 * #### START: walk
 * #### X: stance_mode
 * #### A: reset
-* #### B: get dowm & stand up
+* #### LT: get down left
+* #### RT: get down right
+* #### B: stand up
 * #### Y: freedom_mode
 
 ### Record
@@ -70,5 +72,4 @@ $ ros2 topic echo /joy
 * #### RB: repaly 
 
 ### Bug Fix
-
 - [https://www.notion.so/ROS2-Joystick-Driver-Issue-ce55f7c88de34f2aa791ee9c2afc8dd5?pvs=4](https://www.notion.so/ROS2-Joystick-Driver-Issue-ce55f7c88de34f2aa791ee9c2afc8dd5?pvs=21)
