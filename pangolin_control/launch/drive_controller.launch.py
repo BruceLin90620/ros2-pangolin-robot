@@ -22,8 +22,7 @@ def generate_launch_description():
             output='screen'),
         # Node(
         #     package='pangolin_control',
-        #     executable='pangolin_action_client',
-        #     name='pangolin_action_client',
+        #     executable='pangolin_action',
+        #     name='pangolin_action',
         #     output='screen'),    
-
     ])

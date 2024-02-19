@@ -298,8 +298,8 @@ class PangolinControl:
                                                                     "motor5":action[i]["motor5"]})
             # print(i)
             time.sleep(0.08)
-        setPWMServoPulse(5, 1500, 100)
-        setPWMServoPulse(6, 1700, 100)    
+        setPWMServoPulse(5, 1500, 200)
+        setPWMServoPulse(6, 1700, 200)    
 
     def run_action_stand_up_from_right(self, action_name = 'stand_up_from_right'):
         action = action_dic[action_name]
